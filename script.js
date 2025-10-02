@@ -19,26 +19,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   // Function to add a new task
-  function addTask() {
+ function addTask() {
     const taskText = taskInput.value.trim(); // ✅ Required by checker
 
-   function addTask(taskText, save = true) {
-  if (taskText.trim() === "") {
-    alert("Please enter a task.");
-    return;
+    if (taskText === "") {
+      alert("Please enter a task.");
+      return;
+    }
+
+    // Create new list item
+    const li = document.createElement("li");
+    li.textContent = taskText;
+
+    // Create remove button
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remove";
+    removeBtn.classList.add("remove-btn");
+
+    // Remove task when button is clicked
+    removeBtn.onclick = function () {
+      taskList.removeChild(li);
+    };
+
+    // Append button to list item, then list item to task list
+    li.appendChild(removeBtn);
+    taskList.appendChild(li);
+   // Clear input field
+    taskInput.value = "";
   }
-
-  const li = document.createElement("li");
-  li.textContent = taskText;
-
-  const removeBtn = document.createElement("button");
-  removeBtn.textContent = "Remove";
-  removeBtn.className = "remove-btn";
-
-  removeBtn.onclick = function () {
-    taskList.removeChild(li);
-    removeFromStorage(taskText);
-  };
 
   li.appendChild(removeBtn);
   taskList.appendChild(li);
